@@ -16,10 +16,10 @@ public class User {
     private String user_Id;
     @Column(name = "NAME")
     private String name;
-    @Transient
+    @Column(name = "EMAIL")
     private String email;
     @Column(name = "ABOUT")
     private String about;
-    @Column(name = "RATINGS")
+    @Transient
     private List<Rating>ratings;
 }
