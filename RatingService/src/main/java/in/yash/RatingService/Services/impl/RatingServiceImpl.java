@@ -1,6 +1,8 @@
 package in.yash.RatingService.Services.impl;
 
 import in.yash.RatingService.Entities.Rating;
+import in.yash.RatingService.External.HotelService;
+import in.yash.RatingService.External.UserService;
 import in.yash.RatingService.Repository.RatingRepo;
 import in.yash.RatingService.Services.RatingService;
 import lombok.RequiredArgsConstructor;
@@ -14,11 +16,18 @@ import java.util.UUID;
 public class RatingServiceImpl implements RatingService {
 
     private final RatingRepo ratingRepo;
+    private final HotelService hotelService;
+    private final UserService userService;
 
     @Override
     public Rating create(Rating rating) {
         UUID uuid=UUID.randomUUID();
         rating.setId(uuid.toString());
+        Boolean isPresentHotel=hotelService.checkHotel(rating.getHotelId()).getBody();
+        Boolean isPresentUser=userService.checkUser(rating.getUserId()).getBody();
+        if(! isPresentHotel || !isPresentUser){
+            throw new RuntimeException("you cannot rate");
+        }
         return ratingRepo.save(rating);
     }
 

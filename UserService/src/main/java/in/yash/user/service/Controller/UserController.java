@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/users")
@@ -32,6 +33,16 @@ public class UserController {
     public ResponseEntity<User>getUserById(@PathVariable String user_id){
         User savedUser=userService.getUser(user_id);
         return new ResponseEntity<>(savedUser,HttpStatus.OK);
+    }
+
+    @GetMapping("/checkUser/{userId}")
+    public ResponseEntity<Boolean>checkUser(@PathVariable String userId){
+        return new ResponseEntity<>(userService.checkUser(userId),HttpStatus.OK);
+    }
+
+    @PostMapping("/bulk")
+    public List<User> getUsersByIds(@RequestBody Set<String> userIds) {
+        return userService.getUsersByIds(userIds);
     }
 
 }

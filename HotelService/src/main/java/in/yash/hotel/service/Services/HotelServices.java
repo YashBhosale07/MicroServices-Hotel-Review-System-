@@ -8,4 +8,5 @@ public interface HotelServices {
     Hotel create(Hotel hotel);
     List<Hotel>getAll();
     Hotel get(String id);
+    Boolean checkHotel(String hotelId);
 }

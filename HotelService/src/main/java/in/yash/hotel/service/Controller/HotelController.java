@@ -24,13 +24,18 @@ public class HotelController {
     @GetMapping("/getHotel/{id}")
     public ResponseEntity<Hotel>getHotel(@PathVariable String id){
         Hotel hotel=hotelServices.get(id);
-        return new ResponseEntity<>(hotel,HttpStatus.FOUND);
+        return new ResponseEntity<>(hotel,HttpStatus.OK);
     }
 
-    @GetMapping("getAllHotel")
+    @GetMapping("/getAllHotel")
     public ResponseEntity<List<Hotel>>getAllHotel(){
         List<Hotel> hotels=hotelServices.getAll();
         return new ResponseEntity<>(hotels,HttpStatus.FOUND);
+    }
+
+    @GetMapping("/checkHotel/{hotelId}")
+    public ResponseEntity<Boolean>checkHotel(@PathVariable String hotelId){
+        return new ResponseEntity<>(hotelServices.checkHotel(hotelId),HttpStatus.OK);
     }
 
 

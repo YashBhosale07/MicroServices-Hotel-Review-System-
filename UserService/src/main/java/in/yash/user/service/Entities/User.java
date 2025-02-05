@@ -13,7 +13,7 @@ import java.util.List;
 public class User {
     @Id
     @Column(name = "ID")
-    private String user_Id;
+    private String id;
     @Column(name = "NAME")
     private String name;
     @Column(name = "EMAIL")
