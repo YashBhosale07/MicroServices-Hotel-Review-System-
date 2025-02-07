@@ -1,5 +1,6 @@
 package in.yash.RatingService.Services;
 
+import in.yash.RatingService.Entities.HotelRatings;
 import in.yash.RatingService.Entities.Rating;
 
 import java.util.List;
@@ -16,5 +17,5 @@ public interface RatingService {
 
     //TODO get all by hotelId
     List<Rating>getAllRatingByHotelId(String hotelId);
-
+    HotelRatings getHotelRatings(String hotelId);
 }

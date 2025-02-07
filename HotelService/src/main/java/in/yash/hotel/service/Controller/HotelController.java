@@ -38,5 +38,4 @@ public class HotelController {
         return new ResponseEntity<>(hotelServices.checkHotel(hotelId),HttpStatus.OK);
     }
 
-
 }

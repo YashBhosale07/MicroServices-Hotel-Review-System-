@@ -1,5 +1,6 @@
 package in.yash.hotel.service.External;
 
+import in.yash.hotel.service.Entities.HotelRatings;
 import in.yash.hotel.service.Entities.Rating;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
@@ -13,5 +14,8 @@ public interface RatingService {
 
     @GetMapping("/rating/getRatingByHotelId/{hotelId}")
     public ResponseEntity<List<Rating>> getRatingByHotelId(@PathVariable String hotelId);
+
+    @GetMapping("/rating/getHotelTotalRating/{hotelId}")
+    public ResponseEntity<HotelRatings>getHotelRatings(@PathVariable String hotelId);
 
 }

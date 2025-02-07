@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: Api-GateWay
+  cloud:
+    gateway:
+      routes:
+      - id: HotelService
+        uri: lb://HotelService
+        predicates:
+        - Path=/hotel/**
+server:
+  port: 8084

@@ -1,6 +1,7 @@
 package in.yash.hotel.service.Services.impl;
 
 import in.yash.hotel.service.Entities.Hotel;
+import in.yash.hotel.service.Entities.HotelRatings;
 import in.yash.hotel.service.Entities.Rating;
 import in.yash.hotel.service.Entities.User;
 import in.yash.hotel.service.ExceptionHandler.ResourceNotFoundException;
@@ -44,34 +45,28 @@ public class HotelServiceImpl implements HotelServices {
                 .orElseThrow(() -> new ResourceNotFoundException("Hotel is not present with id " + id));
         savedHotel.setRatings(new ArrayList<>());
         List<Rating> ratings = ratingService.getRatingByHotelId(id).getBody();
-
-        // Get a set of userIds
+        HotelRatings hotelRatings=ratingService.getHotelRatings(id).getBody();
+        savedHotel.setOverAllRatings(hotelRatings.getRating());
+        savedHotel.setPeopleRated(hotelRatings.getNoOfRating());
         Set<String> userIds = ratings.stream()
                 .map(Rating::getUserId)
                 .collect(Collectors.toSet());
-
-        // Fetch users in bulk
         List<User> users = userService.getUsersByIds(userIds);
-
         for (int i = 0; i < ratings.size(); i++) {
             String userId = ratings.get(i).getUserId();
             User user = null;
-
-            // Ensure the userId is not null before proceeding
             if (userId != null) {
                 for (User u : users) {
                     if (u.getId() != null && u.getId().equals(userId)) {
                         user = u;
                         System.out.println(user.toString());
-                        break; // Found the user, exit the loop
+                        break;
                     }
                 }
             }
-
             ratings.get(i).setUser(user);
         }
         savedHotel.setRatings(ratings);
-
         return savedHotel;
     }
 

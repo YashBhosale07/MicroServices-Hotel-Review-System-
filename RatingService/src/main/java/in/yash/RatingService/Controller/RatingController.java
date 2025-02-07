@@ -1,5 +1,7 @@
 package in.yash.RatingService.Controller;
+import in.yash.RatingService.Entities.HotelRatings;
 import in.yash.RatingService.Entities.Rating;
+import in.yash.RatingService.External.HotelService;
 import in.yash.RatingService.Services.RatingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -37,5 +39,11 @@ public class RatingController {
     public ResponseEntity<List<Rating>>getRatingByHotelId(@PathVariable String hotelId){
         List<Rating>getRatingByHotelId=ratingService.getAllRatingByHotelId(hotelId);
         return new ResponseEntity<>(getRatingByHotelId,HttpStatus.OK);
+    }
+
+    @GetMapping("/getHotelTotalRating/{hotelId}")
+    public ResponseEntity<HotelRatings>getHotelRatings(@PathVariable String hotelId){
+        HotelRatings ratings=ratingService.getHotelRatings(hotelId);
+        return new ResponseEntity<>(ratings,HttpStatus.OK);
     }
 }

@@ -21,6 +21,7 @@ public class Hotel {
     private String location;
     private String about;
     private Double overAllRatings=0.0;
+    private int peopleRated=0;
     @Transient
     private List<Rating> ratings;
 
