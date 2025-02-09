@@ -1,0 +1,5 @@
+resilience4j.retry:
+  instances:
+    checkHotelFallBackMethod:
+      maxAttempts: 3
+      waitDuration: 5s

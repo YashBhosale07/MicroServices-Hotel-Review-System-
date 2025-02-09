@@ -8,5 +8,17 @@ spring:
         uri: lb://HotelService
         predicates:
         - Path=/hotel/**
+        filters:
+        - AddRequestHeader=token, xyz
+
+      - id: RatingService
+        uri: lb://RatingService
+        predicates:
+        - Path=/rating/**
+
+      - id: UserService
+        uri: lb://UserService
+        predicates:
+        - Path=/users/**
 server:
   port: 8084
