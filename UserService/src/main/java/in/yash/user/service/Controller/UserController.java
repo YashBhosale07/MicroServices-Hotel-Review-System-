@@ -2,6 +2,7 @@ package in.yash.user.service.Controller;
 
 import in.yash.user.service.Entities.User;
 import in.yash.user.service.Services.UserService;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -30,9 +31,14 @@ public class UserController {
         return new ResponseEntity<>(savedUser,HttpStatus.OK);
     }
     @GetMapping("/getUser/{user_id}")
+    @CircuitBreaker(name = "GetUserByIdCricuitBreaker",fallbackMethod = "GetUserByIdCricuitBreaker")
     public ResponseEntity<User>getUserById(@PathVariable String user_id){
         User savedUser=userService.getUser(user_id);
         return new ResponseEntity<>(savedUser,HttpStatus.OK);
+    }
+
+    public ResponseEntity<User>GetUserByIdCricuitBreaker(@PathVariable String user_id,Throwable throwable){
+        return new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @GetMapping("/checkUser/{userId}")

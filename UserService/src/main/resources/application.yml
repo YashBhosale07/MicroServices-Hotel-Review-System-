@@ -1,15 +1,9 @@
 resilience4j:
-  retry:
-    instances:
-      CreateRating:
-        maxAttempts: 3
-        waitDuration: 5s
-
   circuitbreaker:
     instances:
-      getRatingByUserIdCricuitBreaker:
+      GetUserByIdCricuitBreaker:
         slidingWindowSize: 10
-        permittedNumberOfCallsInHalfOpenState: 3
+        permittedNumberOfCallsInHalfOpenState: 10
         waitDurationInOpenState: 10s
         failureRateThreshold: 50
         minimum-number-of-calls: 2

@@ -3,6 +3,7 @@ import in.yash.RatingService.Entities.HotelRatings;
 import in.yash.RatingService.Entities.Rating;
 import in.yash.RatingService.External.HotelService;
 import in.yash.RatingService.Services.RatingService;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.retry.annotation.Retry;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -42,9 +43,13 @@ public class RatingController {
     }
 
     @GetMapping("/getRatingByUserId/{userId}")
+    @CircuitBreaker(name = "getRatingByUserIdCricuitBreaker",fallbackMethod = "getRatingByUserIdCricuitBreaker")
     public ResponseEntity<List<Rating>>getRatingByUserId(@PathVariable String userId){
         List<Rating>getRatingByUserId=ratingService.getAllRatingByUserId(userId);
         return new ResponseEntity<>(getRatingByUserId,HttpStatus.OK);
+    }
+    public ResponseEntity<List<Rating>>getRatingByUserIdCricuitBreaker(@PathVariable String userId){
+        return new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @GetMapping("/getRatingByHotelId/{hotelId}")
